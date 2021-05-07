@@ -4,6 +4,8 @@ import 'firebase/auth';
 
 // here I want to import the seed file
 
+// import {seedDatabase} from '../seed';
+
 const config = {
   apiKey: "AIzaSyDHYQ9ngl4JyjUEQl0CLZ1RWV2ya1v1mWk",
   authDomain: "instagram-project-b069a.firebaseapp.com",
@@ -17,6 +19,6 @@ const firebase = Firebase.initializeApp(config);
 const {FieldValue} = Firebase.firestore;
 
 // here is where I want to call the seed file (only once!)
-//  seedDatabase(firebase);
+// seedDatabase(firebase);
 
 export {firebase, FieldValue};
