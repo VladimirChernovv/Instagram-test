@@ -27,9 +27,9 @@ export default function Login() {
         />
       </div>
       <div className="flex flex-col w-2/5">
-        <div className="flex flex-col items-center bg-white p-4 border border-gray-primary mb-4">
+        <div className="flex flex-col items-center bg-white p-4 border border-gray-primary mb-4 rounded">
           <h1 className="flex justify-center w-full">
-            <img className="mt-2 w-6/12 bm-4" src="/images/logo.png" alt="Instagram"/>
+            <img className="mt-2 w-6/12 bm-4" src="/images/logo.png" alt="Instagram app"/>
           </h1>
           {error && <p className="mb-4 text-xs text-red-primary">{error}</p>}
           <form onSubmit={handleLogin} method="POST">
@@ -48,7 +48,7 @@ export default function Login() {
               onChange={({target}) => setPassword(target.value)}
             />
             <button
-              className={`bg-blue-500 text-white w-full rounded h-8 font-bold
+              className={`bg-blue-medium text-white w-full rounded h-8 font-bold
               ${isInvalid && 'opacity-50'}`}
               type="submit"
               disabled={isInvalid}
@@ -57,10 +57,10 @@ export default function Login() {
             </button>
           </form>
         </div>
-        <div className="flex justify-center items-center flex-col w-full bg-white p-4 border border-gray-primary">
+        <div className="flex justify-center items-center flex-col w-full bg-white p-4 rounded border border-gray-primary">
           <p className="text-sm">
             Don't have an account?{``}
-            <Link className="font-bold text-blue-medium">
+            <Link className="font-bold text-blue-medium" to="/signup">
               Sign up
             </Link>
           </p>
