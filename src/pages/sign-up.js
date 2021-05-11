@@ -2,13 +2,13 @@ import {useState, useContext, useEffect} from 'react';
 import {Link, useHistory} from 'react-router-dom';
 import FirebaseContext from '../context/firebase';
 import * as ROUTES from '../constants/routes';
-import {doesUserNameExist} from '../services/firebase';
+import {doesUsernameExist} from '../services/firebase';
 
 export default function SignUp() {
   const history = useHistory();
   const {firebase} = useContext(FirebaseContext);
 
-  const [userName, setUserName] = useState('');
+  const [username, setUserName] = useState('');
   const [fullName, setFullName] = useState('');
   const [emailAddress, setEmailAddress] = useState('');
   const [password, setPassword] = useState('');
@@ -19,13 +19,38 @@ export default function SignUp() {
   const handleSignUp = async (event) => {
     event.preventDefault();
 
-    const userNameExists = await doesUserNameExist(userName);
+    const usernameExists = await doesUsernameExist(username);
+    
+    if (!usernameExists.length) {
+      try {
+        const createdUserResult = await firebase
+          .auth()
+          .createUserWithEmailAndPassword(emailAddress, password);
+        // authentication
+          // emailAddress & password & username(displayName)
+        await createdUserResult.user.updateProfile({
+          displayName: username
+        });
 
-    // try {
-      
-    // } catch (error) {
-      
-    // }
+        // firebase user collection (create a document)
+        await firebase.firestore().collection('users').add({
+          userId: createdUserResult.user.uid,
+          username: username.toLowerCase(),
+          fullName,
+          following: [],
+          dateCreated: Date.now()
+        });
+
+        history.push(ROUTES.DASHBOARD);
+      } catch (error) {
+        setFullName('');
+        setEmailAddress('');
+        setPassword('');
+        setError(error.message);
+      }
+    } else {
+      setError('That username is already taken, please try another.');
+    }
   };
 
   useEffect(() => {
@@ -53,7 +78,7 @@ export default function SignUp() {
               type="text"
               placeholder="Username"
               onChange={({target}) => setUserName(target.value)}
-              value={userName}
+              value={username}
             />
             <input
               className="text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2"
@@ -102,8 +127,8 @@ export default function SignUp() {
   );
 };
 
-// fl - "Karl Hadwen"
+// fl - Karl Hadwen
 
-// un - "karl"
+// un - karl
 
 // karlhadwen@gmail.com
