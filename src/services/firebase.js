@@ -12,11 +12,7 @@ export async function doesUsernameExist(username) {
 
 // get user from the firestore where userId === userId (pass from the auth)
 export async function getUserByUserId(userId) {
-  const result = await firebase
-    .firestore()
-    .collection('users')
-    .where('userId', '==', userId)
-    .get();
+  const result = await firebase.firestore().collection('users').where('userId', '==', userId).get();
 
   const user = result.docs.map((item) => ({
     ...item.data(),
@@ -24,4 +20,12 @@ export async function getUserByUserId(userId) {
   }));
 
   return user;
+};
+
+export async function getSuggestedProfiles(userId, following) {
+  const result = await firebase.firestore().collection('users').limit(10).get();
+
+  return result.docs
+    .map((user) => ({ ...user.data(), docId: user.id }))
+    .filter((profile) => profile.userId !== userId && !following.includes(profile.userId));
 };
