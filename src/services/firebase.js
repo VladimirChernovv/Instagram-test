@@ -90,7 +90,7 @@ export async function getPhotos(userId, following) {
       };
 
       // photo.userId = 2
-      const user = await getUserByUserId(photo. userId);
+      const user = await getUserByUserId(photo.userId);
       // raphel
       const {username} = user[0];
 
