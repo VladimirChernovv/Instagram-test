@@ -6,7 +6,7 @@ import { FieldValue } from '../../lib/firebase';
 
 export default function AddComment({docId, comments, setComments, commentInput}) {
   const [comment, setComment] = useState('');
-  const {firebase, FiledValue} = useContext(FirebaseContext);
+  const {firebase, FieldValue} = useContext(FirebaseContext);
   const {
     user: {displayName}
   } = useContext(UserContext);
