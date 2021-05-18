@@ -67,7 +67,7 @@ export default function Login() {
               type="submit"
               disabled={isInvalid}
             >
-              Login in
+              LoginIn
             </button>
           </form>
         </div>

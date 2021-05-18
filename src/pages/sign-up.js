@@ -38,7 +38,8 @@ export default function SignUp() {
           username: username.toLowerCase(),
           fullName,
           emailAddress: emailAddress.toLowerCase(),
-          following: [],
+          following: ['2'],
+          followers: [],
           dateCreated: Date.now()
         });
 
@@ -50,6 +51,7 @@ export default function SignUp() {
         setError(error.message);
       }
     } else {
+      setUserName('');
       setError('That username is already taken, please try another.');
     }
   };
